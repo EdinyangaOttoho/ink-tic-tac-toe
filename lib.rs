@@ -79,6 +79,11 @@ pub mod tic_tac_toe {
         }
 
         #[ink(message)]
+        pub fn get_last_winner(&self) -> AccountId {
+            self.last_winner
+        }
+
+        #[ink(message)]
         pub fn get_current_turn(&self) -> AccountId {
             self.turn
         }
