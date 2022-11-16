@@ -28,7 +28,8 @@ pub mod tic_tac_toe {
         player_two:AccountId,
         staking_token: AccountId,
         stake_amount: Balance,
-        stakes: ink_storage::Mapping<AccountId, Balance>
+        stakes: ink_storage::Mapping<AccountId, Balance>,
+        last_winner: AccountId
     }
 
     impl TicTacToe {
