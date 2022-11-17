@@ -245,7 +245,7 @@ pub mod tic_tac_toe {
         }
 
         #[inline]
-        pub fn _reward_winner(&self, account: AccountId) {
+        pub fn _reward_winner(&mut self, account: AccountId) {
             let total_stakes = PSP22Ref::balance_of(&self.staking_token, Self::env().account_id()); //get total stakes
 
             PSP22Ref::transfer(
@@ -261,7 +261,7 @@ pub mod tic_tac_toe {
         }
 
         #[inline]
-        pub fn _refund_tokens(&self) {
+        pub fn _refund_tokens(&mut self) {
             let total_stakes = PSP22Ref::balance_of(&self.staking_token, Self::env().account_id()); //get total stakes
             let per_player = total_stakes / 2;
 
