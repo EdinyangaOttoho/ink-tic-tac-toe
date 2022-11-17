@@ -152,7 +152,8 @@ pub mod tic_tac_toe {
             .expect("Transfer failed")
             .expect("Transfer failed");
 
-            self.stakes.insert(self.player_one, &self.stake_amount); //Add stake amount to user stake
+            self.stakes.insert(player, &self.stake_amount); //Add stake amount to user stake
+
         }
 
         #[inline]
