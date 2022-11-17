@@ -254,6 +254,10 @@ pub mod tic_tac_toe {
                 total_stakes,
                 ink_prelude::vec![],
             ); //transfer everything to the winner
+
+            self.stakes.insert(self.player_one, &0);
+            
+            self.stakes.insert(self.player_two, &0);
         }
 
         #[inline]
@@ -273,6 +277,11 @@ pub mod tic_tac_toe {
                 per_player,
                 ink_prelude::vec![],
             ); //transfer half to player two
+
+            self.stakes.insert(self.player_one, &0);
+
+            self.stakes.insert(self.player_two, &0);
+
         }
 
         #[ink(message)]
