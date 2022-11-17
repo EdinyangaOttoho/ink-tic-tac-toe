@@ -41,7 +41,7 @@ pub mod tic_tac_toe {
             stake_amount: Balance,
         ) -> Self {
             let me = ink_lang::utils::initialize_contract(|contract: &mut Self| {
-                let board = vec![0; 8]; //empty array
+                let board = vec![0; 9]; //empty array
 
                 contract.board = board; //set board to empty state
 
@@ -215,7 +215,7 @@ pub mod tic_tac_toe {
 
         #[inline]
         pub fn _clear_board(&mut self) {
-            let board = vec![0; 8];
+            let board = vec![0; 9];
             self.board = board;
         }
 
