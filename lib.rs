@@ -153,7 +153,6 @@ pub mod tic_tac_toe {
             .expect("Transfer failed");
 
             self.stakes.insert(player, &self.stake_amount); //Add stake amount to user stake
-
         }
 
         #[inline]
@@ -231,14 +230,14 @@ pub mod tic_tac_toe {
 
         #[inline]
         pub fn _is_board_filled(&self) -> bool {
-            let mut empty_cells = 0;
+            let mut filled_cells = 0;
             let board = &self.board;
             for cell in 0..=8 {
-                if board[usize::try_from(cell).unwrap()] == 0 {
-                    empty_cells += 1;
+                if board[usize::try_from(cell).unwrap()] != 0 {
+                    filled_cells += 1;
                 }
             }
-            if empty_cells == 8 {
+            if filled_cells == 9 {
                 true
             } else {
                 false
