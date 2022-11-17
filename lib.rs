@@ -103,6 +103,16 @@ pub mod tic_tac_toe {
         }
 
         #[ink(message)]
+        pub fn get_player_one(&self) -> AccountId {
+            self.player_one //get player one address
+        }
+
+        #[ink(message)]
+        pub fn get_player_two(&self) -> AccountId {
+            self.player_two //get player two address
+        }
+
+        #[ink(message)]
         pub fn get_player_two_symbol(&self) -> u64 {
             self.symbols.get(self.player_two).unwrap_or(0) //get player two symbol
         }
