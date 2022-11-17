@@ -21,7 +21,7 @@ pub mod tic_tac_toe {
     #[derive(SpreadAllocate)]
 
     pub struct TicTacToe {
-        board: Vec<u64>,
+        board: Vec<u64>, //0 to 8 cells
         turn: AccountId,
         symbols: ink_storage::Mapping<AccountId, u8>,
         player_one:AccountId,
