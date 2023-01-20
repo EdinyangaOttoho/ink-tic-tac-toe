@@ -7,8 +7,7 @@ pub mod tic_tac_toe {
 
     use ink::prelude::vec;
     use ink::prelude::vec::Vec;
-
-    use ink::storage::traits::SpreadAllocate;
+    
     use openbrush::contracts::traits::psp22::PSP22Ref;
 
     use ink::env::CallFlags;
