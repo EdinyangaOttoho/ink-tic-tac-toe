@@ -1,31 +1,31 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_lang as ink;
-
 #[cfg(not(feature = "ink-as-dependency"))]
+
 #[ink::contract]
 pub mod tic_tac_toe {
 
-    use ink_prelude::vec;
-    use ink_prelude::vec::Vec;
+    use ink::prelude::vec;
+    use ink::prelude::vec::Vec;
 
-    use ink_storage::traits::SpreadAllocate;
+    use ink::storage::traits::SpreadAllocate;
     use openbrush::contracts::traits::psp22::PSP22Ref;
 
-    use ink_env::CallFlags;
+    use ink::env::CallFlags;
+
+    use openbrush::traits::Storage;
 
     #[ink(storage)]
-    #[derive(SpreadAllocate)]
-
+    #[derive(Default, Storage)]
     pub struct TicTacToe {
         board: Vec<u64>, //0 to 8 cells
         turn: AccountId,
-        symbols: ink_storage::Mapping<AccountId, u64>,
+        symbols: ink::storage::Mapping<AccountId, u64>,
         player_one: AccountId,
         player_two: AccountId,
         staking_token: AccountId,
         stake_amount: Balance,
-        stakes: ink_storage::Mapping<AccountId, Balance>,
+        stakes: ink::storage::Mapping<AccountId, Balance>,
         last_winner: AccountId,
     }
 
@@ -40,36 +40,38 @@ pub mod tic_tac_toe {
             staking_token: AccountId,
             stake_amount: Balance,
         ) -> Self {
-            let me = ink_lang::utils::initialize_contract(|contract: &mut Self| {
-                let board = vec![0; 9]; //empty array
 
-                contract.board = board; //set board to empty state
+            let mut contract = Self::default();
 
-                contract.staking_token = staking_token; //set staking token
+            let board = vec![0; 9]; //empty array
 
-                contract.stake_amount = stake_amount; //set stake amount
+            contract.board = board; //set board to empty state
 
-                assert!(player_one != player_two); //addresses must not be the same
+            contract.staking_token = staking_token; //set staking token
 
-                assert!(player_one_symbol != player_two_symbol); //symbols must be distinct
+            contract.stake_amount = stake_amount; //set stake amount
 
-                assert!(
-                    (player_one_symbol == 1 || player_one_symbol == 2)
-                        && (player_two_symbol == 1 || player_two_symbol == 2)
-                ); //symbols must be either 1 or 2
+            assert!(player_one != player_two); //addresses must not be the same
 
-                contract.player_one = player_one; //set player one address
+            assert!(player_one_symbol != player_two_symbol); //symbols must be distinct
 
-                contract.player_two = player_two; //set player two address
+            assert!(
+                (player_one_symbol == 1 || player_one_symbol == 2)
+                    && (player_two_symbol == 1 || player_two_symbol == 2)
+            ); //symbols must be either 1 or 2
 
-                contract.symbols.insert(player_one, &player_one_symbol); //set player one symbol
+            contract.player_one = player_one; //set player one address
 
-                contract.symbols.insert(player_two, &player_two_symbol); //set player two symbol
+            contract.player_two = player_two; //set player two address
 
-                contract.turn = player_one; //initialize turn to player one
-            });
+            contract.symbols.insert(player_one, &player_one_symbol); //set player one symbol
 
-            me
+            contract.symbols.insert(player_two, &player_two_symbol); //set player two symbol
+
+            contract.turn = player_one; //initialize turn to player one
+
+            contract
+
         }
 
         #[ink(message)]
@@ -155,7 +157,7 @@ pub mod tic_tac_toe {
                 self.env().caller(),
                 Self::env().account_id(),
                 self.stake_amount,
-                ink_prelude::vec![],
+                ink::prelude::vec![],
             )
             .call_flags(CallFlags::default().set_allow_reentry(true))
             .fire()
@@ -262,7 +264,7 @@ pub mod tic_tac_toe {
                 &self.staking_token,
                 account,
                 total_stakes,
-                ink_prelude::vec![],
+                ink::prelude::vec![],
             ); //transfer everything to the winner
 
             self.stakes.insert(self.player_one, &0);
@@ -279,13 +281,13 @@ pub mod tic_tac_toe {
                 &self.staking_token,
                 self.player_one,
                 per_player,
-                ink_prelude::vec![],
+                ink::prelude::vec![],
             ); //transfer half to player one
             PSP22Ref::transfer(
                 &self.staking_token,
                 self.player_two,
                 per_player,
-                ink_prelude::vec![],
+                ink::prelude::vec![],
             ); //transfer half to player two
 
             self.stakes.insert(self.player_one, &0);
